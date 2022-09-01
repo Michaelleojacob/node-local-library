@@ -18,7 +18,6 @@ exports.genre_list = (req, res, next) => {
 };
 
 // Display detail page for a specific Genre.
-// Display detail page for a specific Genre.
 exports.genre_detail = (req, res, next) => {
   async.parallel(
     {

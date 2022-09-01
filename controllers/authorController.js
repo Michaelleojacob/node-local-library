@@ -19,7 +19,6 @@ exports.author_list = function (req, res, next) {
 };
 
 // Display detail page for a specific Author.
-// Display detail page for a specific Author.
 exports.author_detail = (req, res, next) => {
   async.parallel(
     {
