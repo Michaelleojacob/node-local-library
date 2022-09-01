@@ -1,6 +1,7 @@
 const BookInstance = require('../models/bookinstance');
+const { body, validationResult } = require('express-validator');
+const Book = require('../models/book');
 
-// Display list of all BookInstances.
 // Display list of all BookInstances.
 exports.bookinstance_list = function (req, res, next) {
   BookInstance.find()
