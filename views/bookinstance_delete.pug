@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1 #{ title }: #{ instance.imprint }
+  h1 #{ title }: #{ instance._id }
 
   p #[strong Title:]
     a(href=instance.book.url) #{ instance.book.title }
