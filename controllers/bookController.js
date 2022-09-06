@@ -208,7 +208,6 @@ exports.book_delete_get = (req, res, next) => {
       },
     },
     (err, results) => {
-      console.log(results);
       if (err) {
         return next(err);
       }
