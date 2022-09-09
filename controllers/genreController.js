@@ -114,7 +114,6 @@ exports.genre_delete_get = (req, res, next) => {
       },
     },
     (err, results) => {
-      console.log(results);
       if (err) {
         return next(err);
       }
@@ -171,12 +170,8 @@ exports.genre_update_get = (req, res, next) => {
       genre(cb) {
         Genre.findById(req.params.id).exec(cb);
       },
-      genre_books(cb) {
-        Book.find({ genre: req.params.id }).exec(cb);
-      },
     },
     (err, results) => {
-      console.log('this ran');
       if (err) {
         return next(err);
       }
@@ -188,13 +183,31 @@ exports.genre_update_get = (req, res, next) => {
       res.render('genre_form', {
         title: 'Update Genre',
         genre: results.genre,
-        genre_books: results.genre_books,
       });
     }
   );
 };
 
 // Handle Genre update on POST.
-exports.genre_update_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: Genre update POST');
-};
+exports.genre_update_post = [
+  body('name', 'Genre name required').trim().isLength({ min: 1 }).escape(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const genre = new Genre({ name: req.body.name, _id: req.params.id });
+    console.log(genre);
+    if (!errors.isEmpty()) {
+      res.render('genre_form', {
+        title: 'Update Genre',
+        genre,
+        errors: errors.array(),
+      });
+      return;
+    }
+    Genre.findByIdAndUpdate(req.params.id, genre, {}, (err, theGenre) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(genre.url);
+    });
+  },
+];
